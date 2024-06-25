@@ -49,6 +49,14 @@ function App() {
     taskForTodolist = tasks.filter((t) => t.isDone)
   }
 
+  const changeTaskStatus = (taskId: string, isDone: boolean) => {
+    let task = tasks.find((t) => t.id === taskId)
+    if (task) {
+      task.isDone = isDone
+      setTasks([...tasks])
+    }
+  }
+
   return (
     <div className="App">
       <Todolist
@@ -58,6 +66,7 @@ function App() {
         date={'30.01.24'}
         changeFilter={changeFilter}
         addTask={addTask}
+        changeTaskStatus={changeTaskStatus}
       />
     </div>
   )
