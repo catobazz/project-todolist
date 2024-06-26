@@ -17,11 +17,12 @@ export const Todolist = ({ title, tasks, date, removeTask, changeFilter, addTask
   const [error, setError] = useState<string | null>(null)
 
   const addTaskHandler = () => {
-    setTaskTitle('')
     if (taskTitle.trim() !== '') {
       addTask(taskTitle.trim())
+      setTaskTitle('')
     } else {
       setError('Title is required')
+      setTaskTitle('') // чистим поле от пробелов после ошибки
     }
   }
   const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
