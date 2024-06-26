@@ -18,3 +18,12 @@
 .active-filter {
     background-color: lightgreen;
 }
+
+.is-done {
+    opacity: 0.5;
+}
+
+.todolist-title-container {
+    display: flex;
+    align-items: center;
+}
