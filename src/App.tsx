@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import { Todolist } from './Todolist'
 import { v1 } from 'uuid'
+import { AddItemForm } from './AddItemForm'
 
 export type TasksStateType = {
   [key: string]: TaskType[]
@@ -89,8 +90,30 @@ function App() {
     setTasks({ ...tasks })
   }
 
+  const addTodolist = (title: string) => {
+    const newTodolistId = v1()
+    const newTodolist: TodolistType = { id: newTodolistId, title: title, filter: 'all' }
+    setTodolists([newTodolist, ...todolists])
+    // добавляем пустой массив тасок в новый тудулист
+    setTasks({ ...tasks, [newTodolistId]: [] })
+  }
+
+  const updateTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
+    const updatedTasks = tasks[todolistId].map((task) => {
+      return task.id === taskId ? { ...task, title: newTitle } : task
+    })
+    setTasks({ ...tasks, [todolistId]: updatedTasks })
+  }
+  const updateTodolistTitle = (todolistId: string, newTitle: string) => {
+    const updatedTodolists = todolists.map((todo) => {
+      return todo.id === todolistId ? { ...todo, title: newTitle } : todo
+    })
+    setTodolists(updatedTodolists)
+  }
+
   return (
     <div className="App">
+      <AddItemForm addItem={addTodolist} />
       {todolists.map((tl) => {
         const allTodolistTasks = tasks[tl.id]
         let taskForTodolist = allTodolistTasks
@@ -113,6 +136,8 @@ function App() {
             changeTaskStatus={changeTaskStatus}
             activeFilter={tl.filter}
             removeTodolist={removeTodolist}
+            updateTaskTitle={updateTaskTitle}
+            updateTodolistTitle={updateTodolistTitle}
           />
         )
       })}

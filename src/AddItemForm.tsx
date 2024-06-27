@@ -15,6 +15,7 @@ export const AddItemForm = ({ addItem }: PropsType) => {
       setTitle('')
     } else {
       setError('Title is required')
+      setTitle('')
     }
   }
 
