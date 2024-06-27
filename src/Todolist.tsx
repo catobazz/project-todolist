@@ -1,6 +1,7 @@
 import { Button } from './Button'
 import { FilterValuesType, TaskType } from './App'
 import { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { AddItemForm } from './AddItemForm'
 
 type PropsType = {
   title: string
@@ -27,29 +28,12 @@ export const Todolist = ({
   todolistId,
   removeTodolist,
 }: PropsType) => {
-  const [taskTitle, setTaskTitle] = useState('')
-  const [error, setError] = useState<string | null>(null)
-
-  const addTaskHandler = () => {
-    if (taskTitle.trim() !== '') {
-      addTask(todolistId, taskTitle.trim())
-      setTaskTitle('')
-    } else {
-      setError('Title is required')
-      setTaskTitle('') // чистим поле от пробелов после ошибки
-    }
-  }
-  const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setTaskTitle(event.currentTarget.value)
-  }
-  const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    setError(null)
-    if (event.key === 'Enter') {
-      addTaskHandler()
-    }
-  }
   const removeTodolistUpHandler = () => {
     removeTodolist(todolistId) // колбек вызова функции удаления тудулиста
+  }
+
+  const addTaskCallback = (title: string) => {
+    addTask(todolistId, title)
   }
 
   return (
@@ -60,14 +44,7 @@ export const Todolist = ({
       </div>
 
       <div>
-        <input
-          value={taskTitle}
-          onChange={changeTaskTitleHandler}
-          onKeyUp={addTaskOnKeyUpHandler}
-          className={error ? 'error' : ''}
-        />
-        <Button title="+" onClick={addTaskHandler} />
-        {error && <div className={'error-message'}>{error}</div>}
+        <AddItemForm addItem={addTaskCallback} />
       </div>
       <ul>
         {tasks.map((task) => {
