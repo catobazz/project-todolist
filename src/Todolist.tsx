@@ -1,8 +1,15 @@
-import { Button } from './Button'
 import { FilterValuesType, TaskType } from './App'
 import { ChangeEvent } from 'react'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import Checkbox from '@mui/material/Checkbox'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Box from '@mui/material/Box'
+import { filterButtonsContainerSx, getListItemSx } from './Todolist.styles'
 
 type PropsType = {
   title: string
@@ -33,7 +40,7 @@ export const Todolist = ({
   updateTaskTitle,
   updateTodolistTitle,
 }: PropsType) => {
-  const removeTodolistUpHandler = () => {
+  const removeTodolistHandler = () => {
     removeTodolist(todolistId) // колбек вызова функции удаления тудулиста
   }
 
@@ -51,47 +58,71 @@ export const Todolist = ({
         <h3>
           <EditableSpan value={title} onChange={updateTodolistTitleHandler} />
         </h3>
-        <Button title={'x'} onClick={removeTodolistUpHandler} />
+        <IconButton onClick={removeTodolistHandler}>
+          <DeleteIcon />
+        </IconButton>
       </div>
 
       <div>
         <AddItemForm addItem={addTaskCallback} />
       </div>
-      <ul>
-        {tasks?.map((task) => {
-          const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            const newStatusValue = e.currentTarget.checked
-            changeTaskStatus(todolistId, task.id, newStatusValue)
-          }
-          const changeTaskTitleHandler = (title: string) => {
-            updateTaskTitle(todolistId, task.id, title)
-          }
-          return (
-            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-              <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler} />
-              <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
-              <Button title={'x'} onClick={() => removeTask(todolistId, task.id)} />
-            </li>
-          )
-        })}
-      </ul>
-      <div>
+      {tasks.length === 0 ? (
+        <p>Тасок нет</p>
+      ) : (
+        <List>
+          {tasks?.map((task) => {
+            const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+              const newStatusValue = e.currentTarget.checked
+              changeTaskStatus(todolistId, task.id, newStatusValue)
+            }
+            const changeTaskTitleHandler = (title: string) => {
+              updateTaskTitle(todolistId, task.id, title)
+            }
+            const removeTaskHandler = () => {
+              removeTask(todolistId, task.id)
+            }
+
+            return (
+              <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
+                <div>
+                  <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
+                  <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
+                </div>
+                <IconButton onClick={removeTaskHandler}>
+                  <DeleteIcon />
+                </IconButton>
+              </ListItem>
+            )
+          })}
+        </List>
+      )}
+      <Box sx={filterButtonsContainerSx}>
         <Button
-          title="All"
           onClick={() => changeFilter(todolistId, 'all')}
-          className={activeFilter === 'all' ? 'active-filter' : ''}
-        />
+          variant={activeFilter === 'all' ? 'outlined' : 'text'}
+          color={'inherit'}
+        >
+          All
+        </Button>
+
         <Button
           title="Active"
           onClick={() => changeFilter(todolistId, 'active')}
-          className={activeFilter === 'active' ? 'active-filter' : ''}
-        />
+          variant={activeFilter === 'active' ? 'outlined' : 'text'}
+          color={'primary'}
+        >
+          Active
+        </Button>
+
         <Button
           title="Completed"
           onClick={() => changeFilter(todolistId, 'completed')}
-          className={activeFilter === 'completed' ? 'active-filter' : ''}
-        />
-      </div>
+          variant={activeFilter === 'completed' ? 'outlined' : 'text'}
+          color={'secondary'}
+        >
+          Completed
+        </Button>
+      </Box>
       <div>{date}</div>
     </div>
   )

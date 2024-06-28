@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react'
+import TextField from '@mui/material/TextField'
 
 type Props = {
   value: string
@@ -22,10 +23,18 @@ export const EditableSpan = ({ value, onChange }: Props) => {
   return (
     <>
       {editMode ? (
-        <input value={title} autoFocus onBlur={deactivateEditModeHandler} onChange={changeTitleHandler} />
+        <TextField
+          variant={'outlined'}
+          value={title}
+          size={'small'}
+          onChange={changeTitleHandler}
+          onBlur={deactivateEditModeHandler}
+          autoFocus
+        />
       ) : (
         <span onDoubleClick={activateEditModeHandler}>{value}</span>
       )}
     </>
   )
 }
+// Заметка: необходимо добавить валидацию при имении заголовка на пустую строку !!!
