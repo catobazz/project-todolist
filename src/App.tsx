@@ -19,7 +19,7 @@ import Switch from '@mui/material/Switch'
 export type TasksStateType = {
   [key: string]: TaskType[]
 }
-type TodolistType = {
+export type TodolistType = {
   id: string
   title: string
   filter: FilterValuesType
