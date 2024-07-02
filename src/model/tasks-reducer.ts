@@ -43,33 +43,26 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
       const { title, todolistId } = action.payload
       const newTask = {
         id: v1(),
-        title: title,
+        title,
         isDone: false,
       }
-      const todolistTasks = state[todolistId]
-      state[todolistId] = [newTask, ...todolistTasks]
       return {
         ...state,
+        [todolistId]: [newTask, ...state[todolistId]],
       }
     }
     case 'CHANGE-TASK-STATUS': {
       const { taskId, isDone, todolistId } = action.payload
-      const updatedTasks = state[todolistId].map((task) => {
-        return task.id === taskId ? { ...task, isDone } : task
-      })
       return {
         ...state,
-        [todolistId]: updatedTasks,
+        [todolistId]: state[todolistId].map((task) => (task.id === taskId ? { ...task, isDone } : task)),
       }
     }
     case 'CHANGE-TASK-TITLE': {
       const { taskId, title, todolistId } = action.payload
-      const updatedTasks = state[todolistId].map((task) => {
-        return task.id === taskId ? { ...task, title } : task
-      })
       return {
         ...state,
-        [todolistId]: updatedTasks,
+        [todolistId]: state[todolistId].map((task) => (task.id === taskId ? { ...task, title } : task)),
       }
     }
     case 'ADD-TODOLIST': {
