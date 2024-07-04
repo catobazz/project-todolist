@@ -15,20 +15,7 @@ export type AddTaskActionType = ReturnType<typeof addTaskAC>
 export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
 export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 
-let todolistID1 = v1()
-let todolistID2 = v1()
-
-const initialState: TasksStateType = {
-  [todolistID1]: [
-    { id: v1(), title: 'HTML&CSS', isDone: true },
-    { id: v1(), title: 'JS', isDone: true },
-    { id: v1(), title: 'ReactJS', isDone: false },
-  ],
-  [todolistID2]: [
-    { id: v1(), title: 'Rest API', isDone: true },
-    { id: v1(), title: 'GraphQL', isDone: false },
-  ],
-}
+const initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
   switch (action.type) {
