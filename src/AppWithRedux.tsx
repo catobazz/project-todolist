@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import './App.css'
 import { Todolist } from './Todolist'
 import { AddItemForm } from './AddItemForm'
@@ -57,36 +57,36 @@ function AppWithRedux() {
     },
   })
 
-  const addTask = (todolistId: string, title: string) => {
+  const addTask = useCallback((todolistId: string, title: string) => {
     dispatch(addTaskAC(title, todolistId))
-  }
+  }, [])
 
-  const removeTask = (todolistId: string, taskId: string) => {
+  const removeTask = useCallback((todolistId: string, taskId: string) => {
     dispatch(removeTaskAC(taskId, todolistId))
-  }
+  }, [])
 
-  const changeFilter = (todolistId: string, filtered: FilterValuesType) => {
+  const changeFilter = useCallback((todolistId: string, filtered: FilterValuesType) => {
     dispatch(changeTodolistFilterAC(todolistId, filtered))
-  }
+  }, [])
 
-  const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+  const changeTaskStatus = useCallback((todolistId: string, taskId: string, isDone: boolean) => {
     dispatch(changeTaskStatusAC(taskId, isDone, todolistId))
-  }
+  }, [])
 
-  const removeTodolist = (todolistId: string) => {
+  const removeTodolist = useCallback((todolistId: string) => {
     dispatch(removeTodolistAC(todolistId))
-  }
+  }, [])
 
-  const addTodolist = (title: string) => {
+  const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistAC(title))
-  }
+  }, [])
 
-  const updateTaskTitle = (todolistId: string, taskId: string, newTitle: string) => {
+  const updateTaskTitle = useCallback((todolistId: string, taskId: string, newTitle: string) => {
     dispatch(changeTaskTitleAC(taskId, newTitle, todolistId))
-  }
-  const updateTodolistTitle = (todolistId: string, newTitle: string) => {
+  }, [])
+  const updateTodolistTitle = useCallback((todolistId: string, newTitle: string) => {
     dispatch(changeTodolistTitleAC(todolistId, newTitle))
-  }
+  }, [])
 
   const changeModeHandler = () => {
     setThemeMode(themeMode == 'light' ? 'dark' : 'light')
