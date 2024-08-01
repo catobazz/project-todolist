@@ -66,7 +66,7 @@ function App() {
     },
   })
 
-  const addTask = useCallback((todolistId: string, title: string) => {
+  const addTask = (todolistId: string, title: string) => {
     // 1. Создадим новую таску
     const newTask = {
       id: v1(),
@@ -79,7 +79,7 @@ function App() {
     tasks[todolistId] = [newTask, ...todolistTasks]
     // 4. Засетаем в state копию объекта, чтобы React отреагировал перерисовкой
     setTasks({ ...tasks })
-  }, [])
+  }
 
   const removeTask = (todolistId: string, taskId: string) => {
     // 1. Найдем таски для тудулиста, в котором будет происходить удаление

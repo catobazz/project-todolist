@@ -47,12 +47,23 @@ export const Todolist = React.memo(
       removeTodolist(todolistId) // колбек вызова функции удаления тудулиста
     }
 
-    const addTaskCallback = useCallback((title: string) => {
-      addTask(todolistId, title)
-    }, [])
+    const addTaskCallback = useCallback(
+      (title: string) => {
+        addTask(todolistId, title)
+      },
+      [addTask, todolistId],
+    )
 
     const updateTodolistTitleHandler = (title: string) => {
       updateTodolistTitle(todolistId, title)
+    }
+
+    let taskForTodolist = tasks
+    if (activeFilter === 'active') {
+      taskForTodolist = tasks.filter((t) => !t.isDone)
+    }
+    if (activeFilter === 'completed') {
+      taskForTodolist = tasks.filter((t) => t.isDone)
     }
 
     return (
@@ -73,7 +84,7 @@ export const Todolist = React.memo(
           <p>Тасок нет</p>
         ) : (
           <List>
-            {tasks?.map((task) => {
+            {taskForTodolist?.map((task) => {
               const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 const newStatusValue = e.currentTarget.checked
                 changeTaskStatus(todolistId, task.id, newStatusValue)
@@ -84,7 +95,6 @@ export const Todolist = React.memo(
               const removeTaskHandler = () => {
                 removeTask(todolistId, task.id)
               }
-
               return (
                 <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
                   <div>

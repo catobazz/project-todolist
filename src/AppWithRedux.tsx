@@ -115,20 +115,22 @@ function AppWithRedux() {
         <Grid container spacing={4}>
           {todolists.map((tl) => {
             const allTodolistTasks = tasks[tl.id]
-            let taskForTodolist = allTodolistTasks
-            if (tl.filter === 'active') {
-              taskForTodolist = allTodolistTasks.filter((t) => !t.isDone)
-            }
-            if (tl.filter === 'completed') {
-              taskForTodolist = allTodolistTasks.filter((t) => t.isDone)
-            }
+
+            // let taskForTodolist = allTodolistTasks
+            // if (tl.filter === 'active') {
+            //   taskForTodolist = allTodolistTasks.filter((t) => !t.isDone)
+            // }
+            // if (tl.filter === 'completed') {
+            //   taskForTodolist = allTodolistTasks.filter((t) => t.isDone)
+            // }
+
             return (
               <Grid key={tl.id}>
                 <Paper elevation={5} sx={{ p: '0 20px 20px 20px' }}>
                   <Todolist
                     todolistId={tl.id}
                     title={tl.title}
-                    tasks={taskForTodolist}
+                    tasks={allTodolistTasks}
                     removeTask={removeTask}
                     date={'30.01.24'}
                     changeFilter={changeFilter}
