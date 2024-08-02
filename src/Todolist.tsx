@@ -84,7 +84,7 @@ export const Todolist = React.memo(
           <p>Тасок нет</p>
         ) : (
           <List>
-            {taskForTodolist?.map((task) => {
+            {taskForTodolist.map((task) => {
               const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 const newStatusValue = e.currentTarget.checked
                 changeTaskStatus(todolistId, task.id, newStatusValue)

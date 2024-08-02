@@ -6,6 +6,8 @@ type Props = {
   onChange: (newTitle: string) => void
 }
 export const EditableSpan = ({ value, onChange }: Props) => {
+  console.log('EditableSpan вызван')
+
   const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(value)
 
