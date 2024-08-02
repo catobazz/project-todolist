@@ -1,8 +1,7 @@
 import { TaskType } from './App'
-import React, { ChangeEvent, useCallback } from 'react'
+import React, { ChangeEvent, memo, useCallback } from 'react'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from '@mui/material/Checkbox'
@@ -15,12 +14,13 @@ import { AppRootStateType } from './state/store'
 import { TodolistType } from './AppWithRedux'
 import { changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from './model/todolists-reducer'
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './model/tasks-reducer'
+import CustomButton from './CustomButton'
 
 type PropsType = {
   todolist: TodolistType
 }
 
-export const TodolistWithRedux = React.memo(({ todolist }: PropsType) => {
+export const TodolistWithRedux = memo(({ todolist }: PropsType) => {
   const { id, title, filter } = todolist
 
   const tasks = useSelector<AppRootStateType, TaskType[]>((state) => state.tasks[id])
@@ -47,9 +47,9 @@ export const TodolistWithRedux = React.memo(({ todolist }: PropsType) => {
   if (filter === 'completed') {
     taskForTodolist = tasks.filter((t) => t.isDone)
   }
-  const onAllClickHandler = () => dispatch(changeTodolistFilterAC(id, 'all'))
-  const onActiveClickHandler = () => dispatch(changeTodolistFilterAC(id, 'active'))
-  const onCompleteClickHandler = () => dispatch(changeTodolistFilterAC(id, 'completed'))
+  const onAllClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(id, 'all')), [id])
+  const onActiveClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(id, 'active')), [id])
+  const onCompleteClickHandler = useCallback(() => dispatch(changeTodolistFilterAC(id, 'completed')), [id])
 
   return (
     <div>
@@ -96,27 +96,32 @@ export const TodolistWithRedux = React.memo(({ todolist }: PropsType) => {
         </List>
       )}
       <Box sx={filterButtonsContainerSx}>
-        <Button onClick={onAllClickHandler} variant={filter === 'all' ? 'outlined' : 'text'} color={'inherit'}>
+        <CustomButton
+          onClick={onAllClickHandler}
+          variant={filter === 'all' ? 'outlined' : 'text'}
+          color={'inherit'}
+          title="All"
+        >
           All
-        </Button>
+        </CustomButton>
 
-        <Button
+        <CustomButton
           title="Active"
           onClick={onActiveClickHandler}
           variant={filter === 'active' ? 'outlined' : 'text'}
           color={'primary'}
         >
           Active
-        </Button>
+        </CustomButton>
 
-        <Button
+        <CustomButton
           title="Completed"
           onClick={onCompleteClickHandler}
           variant={filter === 'completed' ? 'outlined' : 'text'}
           color={'secondary'}
         >
           Completed
-        </Button>
+        </CustomButton>
       </Box>
     </div>
   )

@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, memo, useCallback, useState } from 'react'
 import TextField from '@mui/material/TextField'
 
 type Props = {
   value: string
   onChange: (newTitle: string) => void
 }
-export const EditableSpan = ({ value, onChange }: Props) => {
+export const EditableSpan = memo(({ value, onChange }: Props) => {
   console.log('EditableSpan вызван')
 
   const [editMode, setEditMode] = useState(false)
@@ -14,10 +14,10 @@ export const EditableSpan = ({ value, onChange }: Props) => {
   const activateEditModeHandler = () => {
     setEditMode(true)
   }
-  const deactivateEditModeHandler = () => {
+  const deactivateEditModeHandler = useCallback(() => {
     setEditMode(false)
     onChange(title)
-  }
+  }, [onChange, title])
   const changeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value)
   }
@@ -38,5 +38,5 @@ export const EditableSpan = ({ value, onChange }: Props) => {
       )}
     </>
   )
-}
+})
 // Заметка: необходимо добавить валидацию при имении заголовка на пустую строку !!!
