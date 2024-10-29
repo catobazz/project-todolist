@@ -35,7 +35,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
       }
     }
     case 'ADD-TASK': {
-      const { title, todolistId } = action.payload
+      const { title, id } = action.payload
       const newTask = {
         id: v1(),
         title,
@@ -43,7 +43,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
       }
       return {
         ...state,
-        [todolistId]: [newTask, ...state[todolistId]],
+        [id]: [newTask, ...state[id]],
       }
     }
     case 'CHANGE-TASK-STATUS': {
@@ -81,7 +81,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
 export const removeTaskAC = (payload: { taskId: string; todolistId: string }) => {
   return { type: 'REMOVE-TASK', payload } as const
 }
-export const addTaskAC = (payload: { title: string; todolistId: string }) => {
+export const addTaskAC = (payload: { title: string; id: string }) => {
   return { type: 'ADD-TASK', payload } as const
 }
 export const changeTaskStatusAC = (payload: { taskId: string; isDone: boolean; todolistId: string }) => {
