@@ -1,14 +1,11 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from '../EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import Checkbox from '@mui/material/Checkbox'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import { getListItemSx } from './Todolist.styles'
 import { TodolistType } from '../model/todolists-reducer'
 import { FilterTasksButtons } from './FilterTasksButtons'
+import { Todolist } from './Todolist'
 
 type Props = {
   todolist: TodolistType
@@ -46,37 +43,7 @@ export const Todolists = (props: Props) => {
 
       <AddItemForm addItem={addTaskCallback} />
 
-      {tasks.length === 0 ? (
-        <p>Тасок нет</p>
-      ) : (
-        <List>
-          {tasks.map((task) => {
-            const removeTaskHandler = () => {
-              removeTask(task.id, todolist.id)
-            }
-
-            const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-              const newStatusValue = e.currentTarget.checked
-              changeTaskStatus(task.id, newStatusValue, todolist.id)
-            }
-
-            const changeTaskTitleHandler = (title: string) => {
-              updateTask(todolist.id, task.id, title)
-            }
-            return (
-              <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
-                <div>
-                  <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler} />
-                  <EditableSpan value={task.title} onChange={changeTaskTitleHandler} />
-                </div>
-                <IconButton onClick={removeTaskHandler}>
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            )
-          })}
-        </List>
-      )}
+      <Todolist todolist={todolist} />
 
       <FilterTasksButtons todolist={todolist} />
     </div>
