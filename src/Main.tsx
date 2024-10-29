@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Unstable_Grid2'
 import { AddItemForm } from './todolist/AddItemForm'
-import { Todolist } from './todolist/Todolist'
+import { todolist } from './todolist/Todolist'
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { addTodolistAC } from './model/todolists-reducer'
@@ -19,7 +19,7 @@ export const Main = () => {
         <AddItemForm addItem={addTodolist} />
       </Grid>
       <Grid container spacing={4}>
-        <Todolist />
+        <todolist />
       </Grid>
     </Container>
   )

@@ -51,6 +51,6 @@ export const addTodolistAC = (title: string) => {
 export const changeTodolistTitleAC = (todolistId: string, title: string) => {
   return { type: 'CHANGE-TODOLIST-TITLE', payload: { id: todolistId, title } } as const
 }
-export const changeTodolistFilterAC = (todolistId: string, filter: FilterValuesType) => {
-  return { type: 'CHANGE-TODOLIST-FILTER', payload: { id: todolistId, filter } } as const
+export const changeTodolistFilterAC = (payload: { id: string; filter: FilterValuesType }) => {
+  return { type: 'CHANGE-TODOLIST-FILTER', payload } as const
 }
