@@ -23,6 +23,9 @@ import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from '
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from './state/store'
 import { TodolistWithRedux } from './TodolistWithRedux'
+import { getTheme } from './common/theme'
+import { changeThemeAC } from './app/app-reducer'
+import { Header } from './Header'
 
 export type TasksStateType = {
   [key: string]: TaskType[]
@@ -43,17 +46,19 @@ type ThemeMode = 'dark' | 'light'
 
 function AppWithRedux() {
   const todolists = useSelector<AppRootStateType, TodolistType[]>((state) => state.todolists)
+  const themeMode = useSelector<AppRootStateType, ThemeMode>((state) => state.app.themeMode)
   const dispatch = useDispatch()
+  const theme = getTheme(themeMode)
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>('dark')
-  const theme = createTheme({
-    palette: {
-      mode: themeMode === 'light' ? 'light' : 'dark',
-      primary: {
-        main: '#ef6c00',
-      },
-    },
-  })
+  // const [themeMode, setThemeMode] = useState<ThemeMode>('dark')
+  // const theme = createTheme({
+  //   palette: {
+  //     mode: themeMode === 'light' ? 'light' : 'dark',
+  //     primary: {
+  //       main: '#ef6c00',
+  //     },
+  //   },
+  // })
 
   const addTask = useCallback((todolistId: string, title: string) => {
     dispatch(addTaskAC(title, todolistId))
@@ -86,26 +91,14 @@ function AppWithRedux() {
     dispatch(changeTodolistTitleAC(todolistId, newTitle))
   }, [])
 
-  const changeModeHandler = () => {
-    setThemeMode(themeMode == 'light' ? 'dark' : 'light')
-  }
+  // const changeModeHandler = () => {
+  //   dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'))
+  // }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static" sx={{ mb: '30px' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <IconButton color="inherit">
-            <MenuIcon />
-          </IconButton>
-          <div>
-            <MenuButton>Login</MenuButton>
-            <MenuButton>Logout</MenuButton>
-            <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
-            <Switch color={'default'} onChange={changeModeHandler} />
-          </div>
-        </Toolbar>
-      </AppBar>
+      <Header />
       <Container fixed>
         <Grid container sx={{ mb: '30px' }}>
           <AddItemForm addItem={addTodolist} />
