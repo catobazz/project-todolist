@@ -1,4 +1,4 @@
-import { TaskType } from './App'
+import { TaskType } from './app/App'
 import React, { ChangeEvent, useCallback } from 'react'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
