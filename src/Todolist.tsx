@@ -1,4 +1,3 @@
-import { TaskType } from './app/App'
 import React, { ChangeEvent, useCallback } from 'react'
 import { AddItemForm } from './AddItemForm'
 import { EditableSpan } from './EditableSpan'
@@ -12,9 +11,13 @@ import Box from '@mui/material/Box'
 import { filterButtonsContainerSx, getListItemSx } from './Todolist.styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from './state/store'
-import { TodolistType } from './app/App'
-import { changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from './model/todolists-reducer'
-import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './model/tasks-reducer'
+import {
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  TodolistType,
+} from './model/todolists-reducer'
+import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType } from './model/tasks-reducer'
 
 type PropsType = {
   todolist: TodolistType
