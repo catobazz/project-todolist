@@ -4,12 +4,12 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { store } from './state/store'
 import { Provider } from 'react-redux'
-import AppWithRedux from './AppWithRedux'
+import App from './app/App'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>
-    <AppWithRedux />
+    <App />
   </Provider>,
 )
 

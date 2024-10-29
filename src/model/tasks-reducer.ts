@@ -1,6 +1,14 @@
-import { TasksStateType } from '../app/App'
 import { v1 } from 'uuid'
 import { AddTodolistActionType, RemoveTodolistActionType } from './todolists-reducer'
+
+export type TasksStateType = {
+  [key: string]: TaskType[]
+}
+export type TaskType = {
+  id: string
+  title: string
+  isDone: boolean
+}
 
 type ActionsType =
   | RemoveTaskActionType
