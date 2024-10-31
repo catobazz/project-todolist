@@ -1,9 +1,9 @@
 import React from 'react'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useDispatch } from 'react-redux'
-import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from './model/todolists-reducer'
-import { EditableSpan } from './EditableSpan'
+import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from '../../../../model/todolists-reducer'
+import { EditableSpan } from '../../../../../../common/components/EditableSpan/EditableSpan'
+import { useAppDispatch } from '../../../../../../common/hooks/useAppDispatch'
 
 type Props = {
   todolist: TodolistType
@@ -12,7 +12,7 @@ type Props = {
 export const TodolistTitle = ({ todolist }: Props) => {
   const { title, id } = todolist
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const removeTodolistHandler = () => {
     dispatch(removeTodolistAC(id))

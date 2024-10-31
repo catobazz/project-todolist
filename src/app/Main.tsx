@@ -1,13 +1,13 @@
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Unstable_Grid2'
-import { AddItemForm } from './todolist/AddItemForm'
+import { AddItemForm } from '../common/components/AddItemForm/AddItemForm'
 import React, { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
-import { addTodolistAC } from './model/todolists-reducer'
-import { Todolists } from './todolist/Todolists'
+import { addTodolistAC } from '../features/todolists/model/todolists-reducer'
+import { Todolists } from '../features/todolists/ui/Todolists/Todolists'
+import { useAppDispatch } from '../common/hooks/useAppDispatch'
 
 export const Main = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistAC(title))

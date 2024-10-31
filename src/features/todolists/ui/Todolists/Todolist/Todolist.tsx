@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import { AddItemForm } from './AddItemForm'
-import { useDispatch } from 'react-redux'
-import { TodolistType } from '../model/todolists-reducer'
-import { addTaskAC } from '../model/tasks-reducer'
-import { FilterTasksButtons } from './FilterTasksButtons'
-import { Tasks } from '../Tasks'
-import { TodolistTitle } from '../TodolistTitle'
+import { AddItemForm } from '../../../../../common/components/AddItemForm/AddItemForm'
+import { TodolistType } from '../../../model/todolists-reducer'
+import { addTaskAC } from '../../../model/tasks-reducer'
+import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons'
+import { Tasks } from './Tasks/Tasks'
+import { TodolistTitle } from './TodolistTitle/TodolistTitle'
+import { useAppDispatch } from '../../../../../common/hooks/useAppDispatch'
 
 type PropsType = {
   todolist: TodolistType
@@ -14,7 +14,7 @@ type PropsType = {
 export const Todolist = React.memo(({ todolist }: PropsType) => {
   const { id } = todolist
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const addTaskCallback = useCallback((title: string) => {
     dispatch(addTaskAC({ title, id }))

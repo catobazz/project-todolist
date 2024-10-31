@@ -1,17 +1,13 @@
 import React from 'react'
-import './App.css'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import { useSelector } from 'react-redux'
-import { AppRootStateType } from '../state/store'
-import { getTheme } from '../common/theme'
-import { Header } from '../Header'
-import { Main } from '../Main'
-
-type ThemeMode = 'dark' | 'light'
+import { getTheme } from '../common/theme/theme'
+import { Header } from '../common/components/Header/Header'
+import { Main } from './Main'
+import { useAppSelector } from '../common/hooks/useAppSelector'
 
 export function App() {
-  const themeMode = useSelector<AppRootStateType, ThemeMode>((state) => state.app.themeMode)
+  const themeMode = useAppSelector((state) => state.app.themeMode)
   const theme = getTheme(themeMode)
 
   return (

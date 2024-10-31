@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client' // Импортируем библиотеку ReactDOM
 import './index.css'
 import reportWebVitals from './reportWebVitals'
-import { store } from './state/store'
+import { store } from './app/store'
 import { Provider } from 'react-redux'
 import { App } from './app/App'
 
